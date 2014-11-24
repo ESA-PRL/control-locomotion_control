@@ -1,0 +1,17 @@
+<package>
+  <description brief="Locomotion control library for wheeled rovers">
+  Dedicated library that uses the GenericRoverManoeuvre library to translate motion 2D commands into position velocity commands valid for the ExoTer Platform
+  </description>
+  <author>Martin Azkarate/Martin.Azkarate@esa.int</author>
+  <license>GPL v2 or later</license>
+  <url>http://</url>
+  <logo>http://</logo>
+  <!--
+   To add any dependencies use the depend tag
+  <depend package="dummy-dependency-0" />
+	...
+  <depend package="dummy-dependency-n-1" />
+  <depend package="dummy-dependency-n" />
+  -->
+  <depend package="control/generic_rover_manoeuvre" />
+</package>
