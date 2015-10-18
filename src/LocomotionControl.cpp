@@ -430,6 +430,25 @@ void LocomotionControl::pltfDriveWheelWalk(double *dStepLength, int iGait)
 	nodeCommandSetPoint(CANNODE_WHEEL_WALK_GROUP);
 	*/
 }
+
+void LocomotionControl::pltfBemaDeploy(double angle)
+{
+        for (int i=0;i<m_iNumWheels;i++)
+        {
+            commands[COMMAND_WHEEL_WALK_FL+i].pos=angle;
+            commands[COMMAND_WHEEL_WALK_FL+i].mode=MODE_POSITION;
+        }
+}
+
+void LocomotionControl::pltfWalkingDeploy(double angle)
+{
+        for (int i=0;i<2;i++)
+        {
+            commands[COMMAND_WHEEL_WALK_FL+i].pos=angle;
+            commands[COMMAND_WHEEL_WALK_FL+i].mode=MODE_POSITION;
+        }
+}
+
 //-----------------------------------------------
 void LocomotionControl::directWheelDriveVelocityDegS(int iWheel, double dVelocity)
 {
