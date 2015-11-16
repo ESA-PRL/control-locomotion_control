@@ -145,7 +145,7 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_STEER_BR].pos=0;
 			commands[COMMAND_WHEEL_STEER_BR].vel=0;
 			commands[COMMAND_WHEEL_STEER_BR].mode=MODE_POSITION;
-
+/*
 			commands[COMMAND_WHEEL_WALK_FL].pos=0;
 			commands[COMMAND_WHEEL_WALK_FL].vel=0;
 			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_POSITION;
@@ -164,6 +164,7 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_WALK_BR].pos=0;
 			commands[COMMAND_WHEEL_WALK_BR].vel=0;
 			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_POSITION;
+*/
 			break;
 		case ACKERMAN:
 			commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
