@@ -80,6 +80,7 @@ void LocomotionControl::setRoverParams(generic_rover_param p)
 
 	m_iNumWheels=p.WheelNumber;
 	m_dWheelRadius=p.WheelRadius[0];
+        m_dWheelLeg=p.LegLengthV[0];
 
 
 
@@ -432,21 +433,26 @@ void LocomotionControl::pltfDriveWheelWalk(double *dStepLength, int iGait)
 	*/
 }
 
-void LocomotionControl::pltfBemaDeploy(double angle)
+void LocomotionControl::pltfBemaDeploy(double speed)
 {
         for (int i=0;i<m_iNumWheels;i++)
         {
-            commands[COMMAND_WHEEL_WALK_FL+i].pos=angle;
-            commands[COMMAND_WHEEL_WALK_FL+i].mode=MODE_POSITION;
+            commands[COMMAND_WHEEL_WALK_FL+i].vel=speed;
+            commands[COMMAND_WHEEL_WALK_FL+i].mode=MODE_SPEED;
+            commands[COMMAND_WHEEL_DRIVE_FL+i].vel=speed*m_dWheelLeg/m_dWheelRadius;
+	    commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
         }
 }
 
-void LocomotionControl::pltfWalkingDeploy(double angle)
+void LocomotionControl::pltfWalkingDeploy(double speed)
 {
         for (int i=0;i<2;i++)
         {
-            commands[COMMAND_WHEEL_WALK_FL+i].pos=angle;
-            commands[COMMAND_WHEEL_WALK_FL+i].mode=MODE_POSITION;
+            commands[COMMAND_WHEEL_WALK_FL+i].vel=speed;
+            commands[COMMAND_WHEEL_WALK_FL+i].mode=MODE_SPEED;
+            commands[COMMAND_WHEEL_DRIVE_FL+i].vel=speed*m_dWheelLeg/m_dWheelRadius;
+	    commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
+
         }
 }
 

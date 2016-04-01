@@ -195,6 +195,7 @@ public:
 	double m_dWalkAngleRad[NUM_WHEEL_ROVER_MAX];						/**< Walking angle commands */
 	double m_dWheelAngleRad[NUM_WHEEL_ROVER_MAX];					/**< Wheel driving position commands (wheel walking manoeuvre) */
 	double m_dWheelRadius;
+        double m_dWheelLeg;
 	int m_iNumWheels;
 
 	std::vector<MotorCommand> commands;
