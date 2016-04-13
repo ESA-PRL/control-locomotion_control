@@ -129,7 +129,19 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 		case STOPPED_WHEELS:
 			commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
-			break;
+/*			commands[COMMAND_WHEEL_WALK_FL].vel=0;
+			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_WALK_FR].vel=0;
+			commands[COMMAND_WHEEL_WALK_FR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_WALK_CL].vel=0;
+			commands[COMMAND_WHEEL_WALK_CL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_WALK_CR].vel=0;
+			commands[COMMAND_WHEEL_WALK_CR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_WALK_BL].vel=0;
+			commands[COMMAND_WHEEL_WALK_BL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_WALK_BR].vel=0;
+			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_SPEED;
+*/			break;
 		case STRAIGHT_LINE:
 			commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
