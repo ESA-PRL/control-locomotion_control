@@ -175,7 +175,8 @@ public:
          * @param angle is the angle at which the deployment/walking motors are set
          */
         void pltfBemaDeploy(double angle);
-        void pltfWalkingDeploy(double angle);
+        void pltfWalkingDeployFront(double angle);
+        void pltfWalkingDeployRear(double angle);
 
 	/**
 	 * Direct Drive mode motion commands. Use these functions in direct drive control mode only. They control one single motor at a time. Use for drive testing.

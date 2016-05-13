@@ -127,8 +127,10 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 	switch (newDrivingMode)
 	{
 		case STOPPED_WHEELS:
-			commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
+	        	commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
+		        commands[COMMAND_WHEEL_WALK_GROUP].vel=0;
+			commands[COMMAND_WHEEL_WALK_GROUP].mode=MODE_SPEED;
 /*			commands[COMMAND_WHEEL_WALK_FL].vel=0;
 			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_WALK_FR].vel=0;
@@ -451,19 +453,31 @@ void LocomotionControl::pltfBemaDeploy(double speed)
         {
             commands[COMMAND_WHEEL_WALK_FL+i].vel=speed;
             commands[COMMAND_WHEEL_WALK_FL+i].mode=MODE_SPEED;
-            commands[COMMAND_WHEEL_DRIVE_FL+i].vel=speed*m_dWheelLeg/m_dWheelRadius;
+            commands[COMMAND_WHEEL_DRIVE_FL+i].vel=-speed*m_dWheelLeg/m_dWheelRadius*0.60;
 	    commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
         }
 }
 
-void LocomotionControl::pltfWalkingDeploy(double speed)
+void LocomotionControl::pltfWalkingDeployFront(double speed)
 {
         for (int i=0;i<2;i++)
         {
             commands[COMMAND_WHEEL_WALK_FL+i].vel=speed;
             commands[COMMAND_WHEEL_WALK_FL+i].mode=MODE_SPEED;
-            commands[COMMAND_WHEEL_DRIVE_FL+i].vel=speed*m_dWheelLeg/m_dWheelRadius;
+            commands[COMMAND_WHEEL_DRIVE_FL+i].vel=-speed*m_dWheelLeg/m_dWheelRadius*0.60;
 	    commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
+
+        }
+}
+
+void LocomotionControl::pltfWalkingDeployRear(double speed)
+{
+        for (int i=0;i<2;i++)
+        {
+            commands[COMMAND_WHEEL_WALK_BL+i].vel=speed;
+            commands[COMMAND_WHEEL_WALK_BL+i].mode=MODE_SPEED;
+            commands[COMMAND_WHEEL_DRIVE_BL+i].vel=-speed*m_dWheelLeg/m_dWheelRadius;
+	    commands[COMMAND_WHEEL_DRIVE_BL+i].mode=MODE_SPEED;
 
         }
 }
