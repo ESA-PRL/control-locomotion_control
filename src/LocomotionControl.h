@@ -172,11 +172,12 @@ public:
 
         /**
          * **** EGRESS TESTS ADDITIONAL METHODS ****
-         * @param angle is the angle at which the deployment/walking motors are set
+         * @param speed is the angular rate at which the deployment/walking motors are set
+         * @param currentDeployAngles is the array containing the current walking joint angle positions
          */
-        void pltfBemaDeploy(double angle);
-        void pltfWalkingDeployFront(double angle);
-        void pltfWalkingDeployRear(double angle);
+        void pltfBemaDeploy(double speed, double *currentDeployAngles);
+        void pltfWalkingDeployFront(double speed, double *currentDeployAngles);
+        void pltfWalkingDeployRear(double speed, double *currentDeployAngles);
 
 	/**
 	 * Direct Drive mode motion commands. Use these functions in direct drive control mode only. They control one single motor at a time. Use for drive testing.
