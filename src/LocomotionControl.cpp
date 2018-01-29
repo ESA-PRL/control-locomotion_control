@@ -125,153 +125,59 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 
 	switch (newDrivingMode)
 	{
+		case STRAIGHT_LINE:
+		case SKID_TURN:
+		case WHEEL_WALKING:
+			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_FR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
+
+			commands[COMMAND_WHEEL_STEER_FL].pos=0;
+			commands[COMMAND_WHEEL_STEER_FL].vel=0;
+			commands[COMMAND_WHEEL_STEER_FL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_STEER_FR].pos=0;
+			commands[COMMAND_WHEEL_STEER_FR].vel=0;
+			commands[COMMAND_WHEEL_STEER_FR].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_STEER_BL].pos=0;
+			commands[COMMAND_WHEEL_STEER_BL].vel=0;
+			commands[COMMAND_WHEEL_STEER_BL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_STEER_BR].pos=0;
+			commands[COMMAND_WHEEL_STEER_BR].vel=0;
+			commands[COMMAND_WHEEL_STEER_BR].mode=MODE_POSITION;
+			break;
 		case STOPPED_WHEELS:
 			commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
-			break;
-		case STRAIGHT_LINE:
-			commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
-			commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
-			
-			commands[COMMAND_WHEEL_STEER_FL].pos=0;
-			commands[COMMAND_WHEEL_STEER_FL].vel=0;
-			commands[COMMAND_WHEEL_STEER_FL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_STEER_FR].pos=0;
-			commands[COMMAND_WHEEL_STEER_FR].vel=0;
-			commands[COMMAND_WHEEL_STEER_FR].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_STEER_BL].pos=0;
-			commands[COMMAND_WHEEL_STEER_BL].vel=0;
-			commands[COMMAND_WHEEL_STEER_BL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_STEER_BR].pos=0;
-			commands[COMMAND_WHEEL_STEER_BR].vel=0;
-			commands[COMMAND_WHEEL_STEER_BR].mode=MODE_POSITION;
-
-			commands[COMMAND_WHEEL_WALK_FL].pos=0;
-			commands[COMMAND_WHEEL_WALK_FL].vel=0;
-			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_FR].pos=0;
-			commands[COMMAND_WHEEL_WALK_FR].vel=0;
-			commands[COMMAND_WHEEL_WALK_FR].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_CL].pos=0;
-			commands[COMMAND_WHEEL_WALK_CL].vel=0;
-			commands[COMMAND_WHEEL_WALK_CL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_CR].pos=0;
-			commands[COMMAND_WHEEL_WALK_CR].vel=0;
-			commands[COMMAND_WHEEL_WALK_CR].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_BL].pos=0;
-			commands[COMMAND_WHEEL_WALK_BL].vel=0;
-			commands[COMMAND_WHEEL_WALK_BL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_BR].pos=0;
-			commands[COMMAND_WHEEL_WALK_BR].vel=0;
-			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_POSITION;
-			break;
-		case ACKERMAN:
-			commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
-			commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
-			
-			commands[COMMAND_WHEEL_WALK_FL].pos=0;
-			commands[COMMAND_WHEEL_WALK_FL].vel=0;
-			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_FR].pos=0;
-			commands[COMMAND_WHEEL_WALK_FR].vel=0;
-			commands[COMMAND_WHEEL_WALK_FR].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_CL].pos=0;
-			commands[COMMAND_WHEEL_WALK_CL].vel=0;
-			commands[COMMAND_WHEEL_WALK_CL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_CR].pos=0;
-			commands[COMMAND_WHEEL_WALK_CR].vel=0;
-			commands[COMMAND_WHEEL_WALK_CR].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_BL].pos=0;
-			commands[COMMAND_WHEEL_WALK_BL].vel=0;
-			commands[COMMAND_WHEEL_WALK_BL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_BR].pos=0;
-			commands[COMMAND_WHEEL_WALK_BR].vel=0;
-			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_POSITION;
-			break;
-		case SPOT_TURN:
-			commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
-			commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
-			
-			commands[COMMAND_WHEEL_WALK_FL].pos=0;
-			commands[COMMAND_WHEEL_WALK_FL].vel=0;
-			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_FR].pos=0;
-			commands[COMMAND_WHEEL_WALK_FR].vel=0;
-			commands[COMMAND_WHEEL_WALK_FR].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_CL].pos=0;
-			commands[COMMAND_WHEEL_WALK_CL].vel=0;
-			commands[COMMAND_WHEEL_WALK_CL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_CR].pos=0;
-			commands[COMMAND_WHEEL_WALK_CR].vel=0;
-			commands[COMMAND_WHEEL_WALK_CR].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_BL].pos=0;
-			commands[COMMAND_WHEEL_WALK_BL].vel=0;
-			commands[COMMAND_WHEEL_WALK_BL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_BR].pos=0;
-			commands[COMMAND_WHEEL_WALK_BR].vel=0;
-			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_POSITION;
-			break;
-		case SKID_TURN:
-			commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
-			commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
-			
-			commands[COMMAND_WHEEL_STEER_FL].pos=0;
-			commands[COMMAND_WHEEL_STEER_FL].vel=0;
-			commands[COMMAND_WHEEL_STEER_FL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_STEER_FR].pos=0;
-			commands[COMMAND_WHEEL_STEER_FR].vel=0;
-			commands[COMMAND_WHEEL_STEER_FR].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_STEER_BL].pos=0;
-			commands[COMMAND_WHEEL_STEER_BL].vel=0;
-			commands[COMMAND_WHEEL_STEER_BL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_STEER_BR].pos=0;
-			commands[COMMAND_WHEEL_STEER_BR].vel=0;
-			commands[COMMAND_WHEEL_STEER_BR].mode=MODE_POSITION;
-
-			commands[COMMAND_WHEEL_WALK_FL].pos=0;
-			commands[COMMAND_WHEEL_WALK_FL].vel=0;
-			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_FR].pos=0;
-			commands[COMMAND_WHEEL_WALK_FR].vel=0;
-			commands[COMMAND_WHEEL_WALK_FR].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_CL].pos=0;
-			commands[COMMAND_WHEEL_WALK_CL].vel=0;
-			commands[COMMAND_WHEEL_WALK_CL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_CR].pos=0;
-			commands[COMMAND_WHEEL_WALK_CR].vel=0;
-			commands[COMMAND_WHEEL_WALK_CR].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_BL].pos=0;
-			commands[COMMAND_WHEEL_WALK_BL].vel=0;
-			commands[COMMAND_WHEEL_WALK_BL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_BR].pos=0;
-			commands[COMMAND_WHEEL_WALK_BR].vel=0;
-			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_POSITION;
-			break;
-		case WHEEL_WALKING:
-			commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
-			commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
-		
-			commands[COMMAND_WHEEL_STEER_FL].pos=0;
-			commands[COMMAND_WHEEL_STEER_FL].vel=0;
-			commands[COMMAND_WHEEL_STEER_FL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_STEER_FR].pos=0;
-			commands[COMMAND_WHEEL_STEER_FR].vel=0;
-			commands[COMMAND_WHEEL_STEER_FR].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_STEER_BL].pos=0;
-			commands[COMMAND_WHEEL_STEER_BL].vel=0;
-			commands[COMMAND_WHEEL_STEER_BL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_STEER_BR].pos=0;
-			commands[COMMAND_WHEEL_STEER_BR].vel=0;
-			commands[COMMAND_WHEEL_STEER_BR].mode=MODE_POSITION;
-			break;
+            break;
+	    case ACKERMAN:
 		case DIRECT_DRIVE:
-			commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
-			commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
+		case SPOT_TURN:
+			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_FR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
 			break;
 	}
 
 	m_DrivingMode = newDrivingMode;
-	std::cout << "Driving mode set to: " << m_DrivingMode << std::endl;
+	//std::cout << "Driving mode set to: " << m_DrivingMode << std::endl;
 	return true;
 }
 
@@ -283,8 +189,18 @@ void LocomotionControl::pltfDriveStraightVelocity(double dVelocity)
 	}
 
 	double dVelRadS = dVelocity/m_dWheelRadius;
-        commands[COMMAND_WHEEL_DRIVE_GROUP].vel=dVelRadS;
-	commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
+	commands[COMMAND_WHEEL_DRIVE_FL].vel=dVelRadS;
+	commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
+	commands[COMMAND_WHEEL_DRIVE_FR].vel=dVelRadS;
+	commands[COMMAND_WHEEL_DRIVE_FR].mode=MODE_SPEED;
+	commands[COMMAND_WHEEL_DRIVE_CL].vel=dVelRadS;
+	commands[COMMAND_WHEEL_DRIVE_CL].mode=MODE_SPEED;
+	commands[COMMAND_WHEEL_DRIVE_CR].vel=dVelRadS;
+	commands[COMMAND_WHEEL_DRIVE_CR].mode=MODE_SPEED;
+	commands[COMMAND_WHEEL_DRIVE_BL].vel=dVelRadS;
+	commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
+	commands[COMMAND_WHEEL_DRIVE_BR].vel=dVelRadS;
+	commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
 }
 
 void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRotationCenter, double *dPointToControl)
@@ -468,5 +384,3 @@ void LocomotionControl::directWheelWalkJointAngleDeg(int iJoint, double dAngle)
 	commands[iJoint].mode=MODE_POSITION;
 
 }
-
-
