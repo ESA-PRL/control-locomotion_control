@@ -42,6 +42,11 @@
 #include <generic_rover_manoeuvre/GenericRoverManoeuvre.h>
 #include "LocomotionControlTypes.h"
 
+#include <base-logging/Logging.hpp>
+
+#define BASE_LOG_NAMESPACE locomotion_control_library
+#define BASE_LOG_DEBUG
+
 /**
  * List of platform driving modes. So far, this are the modes supported by the Generic Manoeuvre Library.
  */

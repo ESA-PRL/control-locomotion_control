@@ -347,14 +347,14 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 	}
 
 	m_DrivingMode = newDrivingMode;
-	std::cout << "Driving mode set to: " << m_DrivingMode << std::endl;
+	LOG_DEBUG_S << "Driving mode set to: " << m_DrivingMode;
 	return true;
 }
 
 void LocomotionControl::pltfDriveStraightVelocity(double dVelocity)
 {
 	if (m_DrivingMode!=STRAIGHT_LINE){
-		std::cout << "Trying to drive straight without being in straight line mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to drive straight without being in straight line mode. Exiting without driving...";
 		return;
 	}
 
@@ -366,7 +366,7 @@ void LocomotionControl::pltfDriveStraightVelocity(double dVelocity)
 void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRotationCenter, double *dPointToControl)
 {
 	if (m_DrivingMode!=ACKERMAN){
-		std::cout << "Trying to drive Ackerman without being in Ackerman mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to drive Ackerman without being in Ackerman mode. Exiting without driving...";
 		return;
 	}
 
@@ -377,7 +377,7 @@ void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRota
 		m_dWheelSteering,
 		m_dWheelVelocity ))
 	{
-		std::cout << "Error in GenericAckerman function. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Error in GenericAckerman function. Exiting without driving...";
 		return;
 	}
 
@@ -407,7 +407,7 @@ void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRota
 void LocomotionControl::pltfDriveSpotTurn(double dAngularVelocity)
 {
 	if (m_DrivingMode!=SPOT_TURN){
-		std::cout << "Trying to drive Spot Turn without being in Spot Turn mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to drive Spot Turn without being in Spot Turn mode. Exiting without driving...";
 		return;
 	}
 
@@ -416,7 +416,7 @@ void LocomotionControl::pltfDriveSpotTurn(double dAngularVelocity)
 		m_dWheelSteering,
 		m_dWheelVelocity ))
 	{
-		std::cout << "Error in SpotTurn function. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Error in SpotTurn function. Exiting without driving...";
 		return;
 	}
 
@@ -454,7 +454,7 @@ void LocomotionControl::pltfDriveSpotTurn(double dAngularVelocity)
 void LocomotionControl::pltfDriveSkidTurn(double dVelocity, double dRadiusOfCurvature, int iIsStraightLine)
 {
 	if (m_DrivingMode!=SKID_TURN){
-		std::cout << "Trying to drive Skid Turn without being in Skid Turn mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to drive Skid Turn without being in Skid Turn mode. Exiting without driving...";
 		return;
 	}
 
@@ -465,7 +465,7 @@ void LocomotionControl::pltfDriveSkidTurn(double dVelocity, double dRadiusOfCurv
 		iIsStraightLine,
 		m_dWheelVelocity ))
 	{
-		std::cout << "Error in SkidTurn function. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Error in SkidTurn function. Exiting without driving...";
 		return;
 	}
 
@@ -479,7 +479,7 @@ void LocomotionControl::pltfDriveSkidTurn(double dVelocity, double dRadiusOfCurv
 void LocomotionControl::pltfDriveWheelWalk(double *dStepLength, int iGait)
 {
 	if (m_DrivingMode!=WHEEL_WALKING){
-		std::cout << "Trying to drive Wheel Walk without being in Wheel Walking mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to drive Wheel Walk without being in Wheel Walking mode. Exiting without driving...";
 		return;
 	}
 
@@ -490,11 +490,11 @@ void LocomotionControl::pltfDriveWheelWalk(double *dStepLength, int iGait)
 		m_dWheelAngleRad
 		))
 	{
-		std::cout << "Error in WheelWalk function. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Error in WheelWalk function. Exiting without driving...";
 		return;
 	}
 
-	std::cout << "WheelWalk function not implemented yet in Generic Manoeuvre Library. Exiting without driving..." << std::endl;
+	LOG_WARN_S << "WheelWalk function not implemented yet in Generic Manoeuvre Library. Exiting without driving...";
 
 	/* Commented for safety until a validated code for wheel walking capabilities is implemented in the Generic Manoeuvre Library
 	for (int i=0; i<m_iNumWheels;i++)
@@ -549,7 +549,7 @@ void LocomotionControl::pltfWalkingDeployRear(double speed, double *currentDeplo
 void LocomotionControl::directWheelDriveVelocityDegS(int iWheel, double dVelocity)
 {
 	if (m_DrivingMode!=DIRECT_DRIVE){
-		std::cout << "Trying to Direct Drive without being in Direct Drive mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to Direct Drive without being in Direct Drive mode. Exiting without driving...";
 		return;
 	}
 	double dRadS = dVelocity*M_PI/180;
@@ -561,7 +561,7 @@ void LocomotionControl::directWheelDriveVelocityDegS(int iWheel, double dVelocit
 void LocomotionControl::directWheelSteerAngleDeg(int iWheel, double dAngle)
 {
 	if (m_DrivingMode!=DIRECT_DRIVE){
-		std::cout << "Trying to Direct Drive without being in Direct Drive mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to Direct Drive without being in Direct Drive mode. Exiting without driving...";
 		return;
 	}
 	double dRad = dAngle*M_PI/180;
@@ -574,7 +574,7 @@ void LocomotionControl::directWheelSteerAngleDeg(int iWheel, double dAngle)
 void LocomotionControl::directWheelWalkJointAngleDeg(int iJoint, double dAngle)
 {
 	if (m_DrivingMode!=DIRECT_DRIVE){
-		std::cout << "Trying to Direct Drive without being in Direct Drive mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to Direct Drive without being in Direct Drive mode. Exiting without driving...";
 		return;
 	}
 	double dRad = dAngle*M_PI/180;
