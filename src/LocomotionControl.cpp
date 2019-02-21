@@ -127,11 +127,20 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 	switch (newDrivingMode)
 	{
 		case STOPPED_WHEELS:
-	        	commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
-			commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
-		        commands[COMMAND_WHEEL_WALK_GROUP].vel=0;
-			commands[COMMAND_WHEEL_WALK_GROUP].mode=MODE_SPEED;
-/*			commands[COMMAND_WHEEL_WALK_FL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_FR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
+
+  			commands[COMMAND_WHEEL_WALK_FL].vel=0;
 			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_WALK_FR].vel=0;
 			commands[COMMAND_WHEEL_WALK_FR].mode=MODE_SPEED;
@@ -143,7 +152,7 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_WALK_BL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_WALK_BR].vel=0;
 			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_SPEED;
-*/			break;
+  			break;
 		case STRAIGHT_LINE:
 			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
@@ -170,26 +179,6 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_STEER_BR].pos=0;
 			commands[COMMAND_WHEEL_STEER_BR].vel=0;
 			commands[COMMAND_WHEEL_STEER_BR].mode=MODE_POSITION;
-/*
-			commands[COMMAND_WHEEL_WALK_FL].pos=0;
-			commands[COMMAND_WHEEL_WALK_FL].vel=0;
-			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_FR].pos=0;
-			commands[COMMAND_WHEEL_WALK_FR].vel=0;
-			commands[COMMAND_WHEEL_WALK_FR].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_CL].pos=0;
-			commands[COMMAND_WHEEL_WALK_CL].vel=0;
-			commands[COMMAND_WHEEL_WALK_CL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_CR].pos=0;
-			commands[COMMAND_WHEEL_WALK_CR].vel=0;
-			commands[COMMAND_WHEEL_WALK_CR].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_BL].pos=0;
-			commands[COMMAND_WHEEL_WALK_BL].vel=0;
-			commands[COMMAND_WHEEL_WALK_BL].mode=MODE_POSITION;
-			commands[COMMAND_WHEEL_WALK_BR].pos=0;
-			commands[COMMAND_WHEEL_WALK_BR].vel=0;
-			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_POSITION;
-*/
 			break;
 		case ACKERMAN:
 			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
@@ -359,8 +348,18 @@ void LocomotionControl::pltfDriveStraightVelocity(double dVelocity)
 	}
 
 	double dVelRadS = dVelocity/m_dWheelRadius;
-        commands[COMMAND_WHEEL_DRIVE_GROUP].vel=dVelRadS;
-	commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
+    commands[COMMAND_WHEEL_DRIVE_FL].vel=dVelRadS;
+    commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
+    commands[COMMAND_WHEEL_DRIVE_FR].vel=dVelRadS;
+    commands[COMMAND_WHEEL_DRIVE_FR].mode=MODE_SPEED;
+    commands[COMMAND_WHEEL_DRIVE_CL].vel=dVelRadS;
+    commands[COMMAND_WHEEL_DRIVE_CL].mode=MODE_SPEED;
+    commands[COMMAND_WHEEL_DRIVE_CR].vel=dVelRadS;
+    commands[COMMAND_WHEEL_DRIVE_CR].mode=MODE_SPEED;
+    commands[COMMAND_WHEEL_DRIVE_BL].vel=dVelRadS;
+    commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
+    commands[COMMAND_WHEEL_DRIVE_BR].vel=dVelRadS;
+    commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
 }
 
 void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRotationCenter, double *dPointToControl)
@@ -490,7 +489,7 @@ void LocomotionControl::pltfDriveWheelWalk(double *dStepLength, int iGait)
 		m_dWheelAngleRad
 		))
 	{
-		LOG_WARN_S << "Error in WheelWalk function. Exiting without driving...";
+		LOG_ERROR_S << "Error in WheelWalk function. Exiting without driving...";
 		return;
 	}
 
@@ -515,7 +514,7 @@ void LocomotionControl::pltfBemaDeploy(double speed, double *currentDeployAngles
             commands[COMMAND_WHEEL_WALK_FL+i].mode=MODE_SPEED;
             //commands[COMMAND_WHEEL_DRIVE_FL+i].vel=-speed*m_dWheelLeg/m_dWheelRadius*0.60;  //* Contact point of wheel not moving
             commands[COMMAND_WHEEL_DRIVE_FL+i].vel=-speed*(1+m_dWheelLeg/m_dWheelRadius*cos(currentDeployAngles[i]));  //* Deployment joing not moving forward/backward. Just lifting.
-	    commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
+            commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
         }
 }
 
@@ -527,8 +526,7 @@ void LocomotionControl::pltfWalkingDeployFront(double speed, double *currentDepl
             commands[COMMAND_WHEEL_WALK_FL+i].mode=MODE_SPEED;
             //commands[COMMAND_WHEEL_DRIVE_FL+i].vel=-speed*m_dWheelLeg/m_dWheelRadius*0.60;
             commands[COMMAND_WHEEL_DRIVE_FL+i].vel=-speed*(1+m_dWheelLeg/m_dWheelRadius*cos(currentDeployAngles[i]));
-	    commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
-
+            commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
         }
 }
 
@@ -540,8 +538,7 @@ void LocomotionControl::pltfWalkingDeployRear(double speed, double *currentDeplo
             commands[COMMAND_WHEEL_WALK_BL+i].mode=MODE_SPEED;
             //commands[COMMAND_WHEEL_DRIVE_BL+i].vel=-speed*m_dWheelLeg/m_dWheelRadius;
             commands[COMMAND_WHEEL_DRIVE_BL+i].vel=-speed*(1+m_dWheelLeg/m_dWheelRadius*cos(currentDeployAngles[4+i]));
-	    commands[COMMAND_WHEEL_DRIVE_BL+i].mode=MODE_SPEED;
-
+            commands[COMMAND_WHEEL_DRIVE_BL+i].mode=MODE_SPEED;
         }
 }
 
@@ -581,7 +578,4 @@ void LocomotionControl::directWheelWalkJointAngleDeg(int iJoint, double dAngle)
 	commands[iJoint].pos=dRad;
 	commands[iJoint].vel=0;
 	commands[iJoint].mode=MODE_POSITION;
-
 }
-
-
