@@ -80,7 +80,7 @@ void LocomotionControl::setRoverParams(generic_rover_param p)
 
 	m_iNumWheels=p.WheelNumber;
 	m_dWheelRadius=p.WheelRadius[0];
-        m_dWheelLeg=p.LegLengthV[0];
+    m_dWheelLeg=p.LegLengthV[0];
 
 
 
@@ -164,6 +164,12 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_STEER_FR].pos=0;
 			commands[COMMAND_WHEEL_STEER_FR].vel=0;
 			commands[COMMAND_WHEEL_STEER_FR].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_STEER_CL].pos=0;
+			commands[COMMAND_WHEEL_STEER_CL].vel=0;
+			commands[COMMAND_WHEEL_STEER_CL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_STEER_CR].pos=0;
+			commands[COMMAND_WHEEL_STEER_CR].vel=0;
+			commands[COMMAND_WHEEL_STEER_CR].mode=MODE_POSITION;
 			commands[COMMAND_WHEEL_STEER_BL].pos=0;
 			commands[COMMAND_WHEEL_STEER_BL].vel=0;
 			commands[COMMAND_WHEEL_STEER_BL].mode=MODE_POSITION;
@@ -277,6 +283,12 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_STEER_FR].pos=0;
 			commands[COMMAND_WHEEL_STEER_FR].vel=0;
 			commands[COMMAND_WHEEL_STEER_FR].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_STEER_CL].pos=0;
+			commands[COMMAND_WHEEL_STEER_CL].vel=0;
+			commands[COMMAND_WHEEL_STEER_CL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_STEER_CR].pos=0;
+			commands[COMMAND_WHEEL_STEER_CR].vel=0;
+			commands[COMMAND_WHEEL_STEER_CR].mode=MODE_POSITION;
 			commands[COMMAND_WHEEL_STEER_BL].pos=0;
 			commands[COMMAND_WHEEL_STEER_BL].vel=0;
 			commands[COMMAND_WHEEL_STEER_BL].mode=MODE_POSITION;
@@ -323,6 +335,12 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_STEER_FR].pos=0;
 			commands[COMMAND_WHEEL_STEER_FR].vel=0;
 			commands[COMMAND_WHEEL_STEER_FR].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_STEER_CL].pos=0;
+			commands[COMMAND_WHEEL_STEER_CL].vel=0;
+			commands[COMMAND_WHEEL_STEER_CL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_STEER_CR].pos=0;
+			commands[COMMAND_WHEEL_STEER_CR].vel=0;
+			commands[COMMAND_WHEEL_STEER_CR].mode=MODE_POSITION;
 			commands[COMMAND_WHEEL_STEER_BL].pos=0;
 			commands[COMMAND_WHEEL_STEER_BL].vel=0;
 			commands[COMMAND_WHEEL_STEER_BL].mode=MODE_POSITION;
@@ -389,6 +407,14 @@ void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRota
 	commands[COMMAND_WHEEL_STEER_FR].vel=0;
 	commands[COMMAND_WHEEL_STEER_FR].mode=MODE_POSITION;
 
+	commands[COMMAND_WHEEL_STEER_CL].pos=m_dWheelSteering[2];
+	commands[COMMAND_WHEEL_STEER_CL].vel=0;
+	commands[COMMAND_WHEEL_STEER_CL].mode=MODE_POSITION;
+
+	commands[COMMAND_WHEEL_STEER_CR].pos=m_dWheelSteering[3];
+	commands[COMMAND_WHEEL_STEER_CR].vel=0;
+	commands[COMMAND_WHEEL_STEER_CR].mode=MODE_POSITION;
+
 	commands[COMMAND_WHEEL_STEER_BL].pos=m_dWheelSteering[4];
 	commands[COMMAND_WHEEL_STEER_BL].vel=0;
 	commands[COMMAND_WHEEL_STEER_BL].mode=MODE_POSITION;
@@ -427,6 +453,14 @@ void LocomotionControl::pltfDriveSpotTurn(double dAngularVelocity)
 	commands[COMMAND_WHEEL_STEER_FR].pos=m_dWheelSteering[1];
 	commands[COMMAND_WHEEL_STEER_FR].vel=0;
 	commands[COMMAND_WHEEL_STEER_FR].mode=MODE_POSITION;
+
+	commands[COMMAND_WHEEL_STEER_CL].pos=m_dWheelSteering[2]-M_PI;
+	commands[COMMAND_WHEEL_STEER_CL].vel=0;
+	commands[COMMAND_WHEEL_STEER_CL].mode=MODE_POSITION;
+
+	commands[COMMAND_WHEEL_STEER_CR].pos=m_dWheelSteering[3];
+	commands[COMMAND_WHEEL_STEER_CR].vel=0;
+	commands[COMMAND_WHEEL_STEER_CR].mode=MODE_POSITION;
 
 	commands[COMMAND_WHEEL_STEER_BL].pos=m_dWheelSteering[4]+M_PI;
 	commands[COMMAND_WHEEL_STEER_BL].vel=0;
