@@ -158,7 +158,7 @@ public:
 	 * @param dHeadingAngle is the angle at which the rover shall move relative to the forward direction of the rover in RAD.
 	 * @param dAngularVelocity is the rate at which the rover shall rotate around its inertial frame. [rad/s]
 	 */
-	void pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, base::samples::Joints joints_readings);
+	void pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, double *steeringPositionReadings);
 
 	/**
 	 * **** Generic Manoeuvre Library ****

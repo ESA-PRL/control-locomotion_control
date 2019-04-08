@@ -145,18 +145,25 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
 
+			// TODO: Double check that this works.
+			commands[COMMAND_WHEEL_WALK_FL].pos=0;
 			commands[COMMAND_WHEEL_WALK_FL].vel=0;
-			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_FR].pos=0;
 			commands[COMMAND_WHEEL_WALK_FR].vel=0;
-			commands[COMMAND_WHEEL_WALK_FR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_WALK_FR].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_CL].pos=0;
 			commands[COMMAND_WHEEL_WALK_CL].vel=0;
-			commands[COMMAND_WHEEL_WALK_CL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_WALK_CL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_CR].pos=0;
 			commands[COMMAND_WHEEL_WALK_CR].vel=0;
-			commands[COMMAND_WHEEL_WALK_CR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_WALK_CR].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_BL].pos=0;
 			commands[COMMAND_WHEEL_WALK_BL].vel=0;
-			commands[COMMAND_WHEEL_WALK_BL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_WALK_BL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_BR].pos=0;
 			commands[COMMAND_WHEEL_WALK_BR].vel=0;
-			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_POSITION;
 			break;
 		case STRAIGHT_LINE:
 			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
@@ -478,20 +485,23 @@ void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRota
 	}
 }
 
-void LocomotionControl::pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, base::samples::Joints joints_readings)
+void LocomotionControl::pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, double *steeringPositionReadings)
 {
 	// Preventing force value from being sent to genericrovermanoeuvre.
 	if (dLinearVelocity == 42 || dAngularVelocity == 42) return;
+
+	// for (int i=0;i<6;i++) std::cout << steeringPositionReadings[i] << std::endl;
 
 	if (m_DrivingMode!=GENERIC_CRAB){
 		std::cout << "Trying to drive Generic Crab without being in Generic Crab mode. Exiting without driving..." << std::endl;
 		return;
 	}
+
 	if(GenericCrab( &MyRover,
 		dLinearVelocity,
 		dHeadingAngle,
 		dAngularVelocity,
-		// joints_readings,
+		steeringPositionReadings,
 		m_dWheelSteering,
 		m_dWheelVelocity ))
 	{
