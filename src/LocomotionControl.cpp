@@ -127,11 +127,25 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 	switch (newDrivingMode)
 	{
 		case STOPPED_WHEELS:
-	        	commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
-			commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
-		        commands[COMMAND_WHEEL_WALK_GROUP].vel=0;
-			commands[COMMAND_WHEEL_WALK_GROUP].mode=MODE_SPEED;
-/*			commands[COMMAND_WHEEL_WALK_FL].vel=0;
+			// commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
+			// commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
+			// commands[COMMAND_WHEEL_WALK_GROUP].vel=0;
+			// commands[COMMAND_WHEEL_WALK_GROUP].mode=MODE_SPEED;
+
+			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_FR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
+
+			commands[COMMAND_WHEEL_WALK_FL].vel=0;
 			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_WALK_FR].vel=0;
 			commands[COMMAND_WHEEL_WALK_FR].mode=MODE_SPEED;
@@ -143,7 +157,7 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_WALK_BL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_WALK_BR].vel=0;
 			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_SPEED;
-*/			break;
+			break;
 		case STRAIGHT_LINE:
 			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
@@ -362,10 +376,44 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
 			break;
+
+		case GENERIC_CRAB:
+			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_FR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
+			
+			commands[COMMAND_WHEEL_WALK_FL].pos=0;
+			commands[COMMAND_WHEEL_WALK_FL].vel=0;
+			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_FR].pos=0;
+			commands[COMMAND_WHEEL_WALK_FR].vel=0;
+			commands[COMMAND_WHEEL_WALK_FR].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_CL].pos=0;
+			commands[COMMAND_WHEEL_WALK_CL].vel=0;
+			commands[COMMAND_WHEEL_WALK_CL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_CR].pos=0;
+			commands[COMMAND_WHEEL_WALK_CR].vel=0;
+			commands[COMMAND_WHEEL_WALK_CR].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_BL].pos=0;
+			commands[COMMAND_WHEEL_WALK_BL].vel=0;
+			commands[COMMAND_WHEEL_WALK_BL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_BR].pos=0;
+			commands[COMMAND_WHEEL_WALK_BR].vel=0;
+			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_POSITION;
+			break;
 	}
 
 	m_DrivingMode = newDrivingMode;
-	std::cout << "Driving mode set to: " << m_DrivingMode << std::endl;
+	// std::cout << "Driving mode set to: " << m_DrivingMode << std::endl;
 	return true;
 }
 
@@ -429,6 +477,66 @@ void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRota
 		commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
 	}
 }
+
+void LocomotionControl::pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, base::samples::Joints joints_readings)
+{
+	// Preventing force value from being sent to genericrovermanoeuvre.
+	if (dLinearVelocity == 42 || dAngularVelocity == 42) return;
+
+	if (m_DrivingMode!=GENERIC_CRAB){
+		std::cout << "Trying to drive Generic Crab without being in Generic Crab mode. Exiting without driving..." << std::endl;
+		return;
+	}
+	if(GenericCrab( &MyRover,
+		dLinearVelocity,
+		dHeadingAngle,
+		dAngularVelocity,
+		// joints_readings,
+		m_dWheelSteering,
+		m_dWheelVelocity ))
+	{
+		std::cout << "Error in GenericCrab function. Exiting without driving..." << std::endl;
+		return;
+	}
+
+	commands[COMMAND_WHEEL_STEER_FL].pos=m_dWheelSteering[0];
+	commands[COMMAND_WHEEL_STEER_FL].vel=0;
+	commands[COMMAND_WHEEL_STEER_FL].mode=MODE_POSITION;
+
+	commands[COMMAND_WHEEL_STEER_FR].pos=m_dWheelSteering[1];
+	commands[COMMAND_WHEEL_STEER_FR].vel=0;
+	commands[COMMAND_WHEEL_STEER_FR].mode=MODE_POSITION;
+
+	commands[COMMAND_WHEEL_STEER_CL].pos=m_dWheelSteering[2];
+	commands[COMMAND_WHEEL_STEER_CL].vel=0;
+	commands[COMMAND_WHEEL_STEER_CL].mode=MODE_POSITION;
+
+	commands[COMMAND_WHEEL_STEER_CR].pos=m_dWheelSteering[3];
+	commands[COMMAND_WHEEL_STEER_CR].vel=0;
+	commands[COMMAND_WHEEL_STEER_CR].mode=MODE_POSITION;
+
+	commands[COMMAND_WHEEL_STEER_BL].pos=m_dWheelSteering[4];
+	commands[COMMAND_WHEEL_STEER_BL].vel=0;
+	commands[COMMAND_WHEEL_STEER_BL].mode=MODE_POSITION;
+
+	commands[COMMAND_WHEEL_STEER_BR].pos=m_dWheelSteering[5];
+	commands[COMMAND_WHEEL_STEER_BR].vel=0;
+	commands[COMMAND_WHEEL_STEER_BR].mode=MODE_POSITION;
+
+	// std::cout << m_dWheelSteering[0] << std::endl;
+	// std::cout << m_dWheelSteering[1] << std::endl;
+	// std::cout << m_dWheelSteering[2] << std::endl;
+	// std::cout << m_dWheelSteering[3] << std::endl;
+	// std::cout << m_dWheelSteering[4] << std::endl;
+	// std::cout << m_dWheelSteering[5] << std::endl;
+
+	for (int i=0; i<m_iNumWheels;i++)
+	{
+		commands[COMMAND_WHEEL_DRIVE_FL+i].vel=m_dWheelVelocity[i];
+		commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
+	}
+}
+
 
 void LocomotionControl::pltfDriveSpotTurn(double dAngularVelocity)
 {

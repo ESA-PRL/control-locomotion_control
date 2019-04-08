@@ -41,6 +41,7 @@
 //* other shared library includes --------------------------------
 #include <generic_rover_manoeuvre/GenericRoverManoeuvre.h>
 #include "LocomotionControlTypes.h"
+#include <base/samples/Joints.hpp>
 
 /**
  * List of platform driving modes. So far, this are the modes supported by the Generic Manoeuvre Library.
@@ -53,7 +54,8 @@ enum PltfDrivingMode
 	SPOT_TURN,
 	SKID_TURN,
 	WHEEL_WALKING,
-	DIRECT_DRIVE
+	DIRECT_DRIVE,
+	GENERIC_CRAB
 };
 
 /**
@@ -135,18 +137,28 @@ public:
 	/**
 	 * **** Generic Manoeuvre Library ****
 	 * Drives the rover platform in straight linear motion (forwards or backwards depending on the velocity sign).
-	 * @param dVelocity Is the velocity in m/s at which the rover shall be commanded
+	 * @param dVelocity is the velocity in m/s at which the rover shall be commanded
 	 */
 	void pltfDriveStraightVelocity(double dVelocity);
 
 	/**
 	 * **** Generic Manoeuvre Library ****
 	 * Drives the rover platform to perform a Generic Ackerman manoeuvre (forwards or backwards depending on the velocity sign).
-	 * @param dVelocity Is the velocity in m/s at which the rover shall be commanded
+	 * @param dVelocity is the velocity in m/s at which the rover shall be commanded
 	 * @param dRotationCenter is the Center of Rotation of the Generic Ackerman manoeuvre. {x,y} position values
 	 * @param dPointToControl is the Point to Control of the Generic Ackerman manoeuvre. {x,y} position values
 	 */
 	void pltfDriveGenericAckerman(double dVelocity, double *dRotationCenter, double *dPointToControl);
+
+
+	/**
+	 * **** Generic Manoeuvre Library ****
+	 * Drives the rover platform to perform a Generic Crab manoeuvre. This is only works if all wheels are steerable.
+	 * @param dLinearVelocity is the velocity in m/s at which the rover shall be commanded
+	 * @param dHeadingAngle is the angle at which the rover shall move relative to the forward direction of the rover in RAD.
+	 * @param dAngularVelocity is the rate at which the rover shall rotate around its inertial frame. [rad/s]
+	 */
+	void pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, base::samples::Joints joints_readings);
 
 	/**
 	 * **** Generic Manoeuvre Library ****
