@@ -54,6 +54,7 @@ enum PltfDrivingMode
 	ACKERMAN,
 	SPOT_TURN,
 	SKID_TURN,
+    CRAB,
 	WHEEL_WALKING,
 	DIRECT_DRIVE
 };
@@ -146,6 +147,8 @@ public:
 	 * @param dPointToControl is the Point to Control of the Generic Ackerman manoeuvre. {x,y} position values
 	 */
 	void pltfDriveGenericAckerman(double dVelocity, double *dRotationCenter, double *dPointToControl);
+
+    void pltfDriveCrab(double dVelocity, double dHeadingAngle);
 
 	/**
 	 * **** Generic Manoeuvre Library ****

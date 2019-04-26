@@ -219,6 +219,39 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_WALK_BR].vel=0;
 			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_POSITION;
 			break;
+		case CRAB:
+			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_FR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
+			
+			commands[COMMAND_WHEEL_WALK_FL].pos=0;
+			commands[COMMAND_WHEEL_WALK_FL].vel=0;
+			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_FR].pos=0;
+			commands[COMMAND_WHEEL_WALK_FR].vel=0;
+			commands[COMMAND_WHEEL_WALK_FR].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_CL].pos=0;
+			commands[COMMAND_WHEEL_WALK_CL].vel=0;
+			commands[COMMAND_WHEEL_WALK_CL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_CR].pos=0;
+			commands[COMMAND_WHEEL_WALK_CR].vel=0;
+			commands[COMMAND_WHEEL_WALK_CR].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_BL].pos=0;
+			commands[COMMAND_WHEEL_WALK_BL].vel=0;
+			commands[COMMAND_WHEEL_WALK_BL].mode=MODE_POSITION;
+			commands[COMMAND_WHEEL_WALK_BR].pos=0;
+			commands[COMMAND_WHEEL_WALK_BR].vel=0;
+			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_POSITION;
+			break;
 		case SPOT_TURN:
 			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
@@ -426,6 +459,47 @@ void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRota
 
 	for (int i=0; i<m_iNumWheels;i++)
 	{
+		commands[COMMAND_WHEEL_DRIVE_FL+i].vel=m_dWheelVelocity[i];
+		commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
+	}
+}
+
+void LocomotionControl::pltfDriveCrab(double dVelocity, double dHeadingAngle)
+{
+
+	if (m_DrivingMode!=CRAB){
+		LOG_WARN_S << "Trying to drive Crab without being in Crab mode. Exiting without driving...";
+		return;
+	}
+
+    if (Crab( &MyRover,
+	    dVelocity,
+	    dHeadingAngle,
+		m_dWheelSteering,
+		m_dWheelVelocity ))
+    {
+
+		LOG_WARN_S << "Error in Crab function. Exiting without driving...";
+		return;
+    }
+
+	for (int i=0; i<m_iNumWheels;i++)
+	{
+        if (m_dWheelSteering[i] > M_PI / 2.0)
+        {
+            m_dWheelSteering[i] -= M_PI; 
+            m_dWheelVelocity[i] *= -1;
+        }
+        else if (m_dWheelSteering[i] < -M_PI / 2.0)
+        {
+            m_dWheelSteering[i] += M_PI; 
+            m_dWheelVelocity[i] *= -1;
+        }
+
+        commands[COMMAND_WHEEL_STEER_FL+i].pos=m_dWheelSteering[i];
+        commands[COMMAND_WHEEL_STEER_FL+i].vel=0;
+        commands[COMMAND_WHEEL_STEER_FL+i].mode=MODE_POSITION;
+
 		commands[COMMAND_WHEEL_DRIVE_FL+i].vel=m_dWheelVelocity[i];
 		commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
 	}
