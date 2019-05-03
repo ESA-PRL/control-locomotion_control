@@ -43,6 +43,8 @@
 #include "LocomotionControlTypes.h"
 #include <base/samples/Joints.hpp>
 
+#include <base-logging/Logging.hpp>
+
 /**
  * List of platform driving modes. So far, this are the modes supported by the Generic Manoeuvre Library.
  */
@@ -53,6 +55,7 @@ enum PltfDrivingMode
 	ACKERMAN,
 	SPOT_TURN,
 	SKID_TURN,
+  CRAB,
 	WHEEL_WALKING,
 	DIRECT_DRIVE,
 	GENERIC_CRAB
@@ -82,9 +85,6 @@ enum MotorCommandNode
 	,COMMAND_WHEEL_WALK_CR
 	,COMMAND_WHEEL_WALK_BL
 	,COMMAND_WHEEL_WALK_BR
-	,COMMAND_WHEEL_DRIVE_GROUP
-	,COMMAND_WHEEL_STEER_GROUP
-	,COMMAND_WHEEL_WALK_GROUP
 };
 
 /**
@@ -159,6 +159,8 @@ public:
 	 * @param dAngularVelocity is the rate at which the rover shall rotate around its inertial frame. [rad/s]
 	 */
 	void pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, double *steeringPositionReadings);
+
+  void pltfDriveCrab(double dVelocity, double dHeadingAngle);
 
 	/**
 	 * **** Generic Manoeuvre Library ****

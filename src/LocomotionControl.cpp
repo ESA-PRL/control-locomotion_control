@@ -127,11 +127,6 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 	switch (newDrivingMode)
 	{
 		case STOPPED_WHEELS:
-			// commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
-			// commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
-			// commands[COMMAND_WHEEL_WALK_GROUP].vel=0;
-			// commands[COMMAND_WHEEL_WALK_GROUP].mode=MODE_SPEED;
-
 			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_DRIVE_FR].vel=0;
@@ -178,7 +173,7 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
-			
+
 			commands[COMMAND_WHEEL_STEER_FL].pos=0;
 			commands[COMMAND_WHEEL_STEER_FL].vel=0;
 			commands[COMMAND_WHEEL_STEER_FL].mode=MODE_POSITION;
@@ -197,7 +192,21 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_STEER_BR].pos=0;
 			commands[COMMAND_WHEEL_STEER_BR].vel=0;
 			commands[COMMAND_WHEEL_STEER_BR].mode=MODE_POSITION;
-/*
+			break;
+		case ACKERMAN:
+			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_FR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_FR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_CR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_CR].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BL].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
+			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
+			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
+
 			commands[COMMAND_WHEEL_WALK_FL].pos=0;
 			commands[COMMAND_WHEEL_WALK_FL].vel=0;
 			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_POSITION;
@@ -216,9 +225,8 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_WALK_BR].pos=0;
 			commands[COMMAND_WHEEL_WALK_BR].vel=0;
 			commands[COMMAND_WHEEL_WALK_BR].mode=MODE_POSITION;
-*/
 			break;
-		case ACKERMAN:
+		case CRAB:
 			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_DRIVE_FR].vel=0;
@@ -231,7 +239,7 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
-			
+
 			commands[COMMAND_WHEEL_WALK_FL].pos=0;
 			commands[COMMAND_WHEEL_WALK_FL].vel=0;
 			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_POSITION;
@@ -264,7 +272,7 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
-			
+
 			commands[COMMAND_WHEEL_WALK_FL].pos=0;
 			commands[COMMAND_WHEEL_WALK_FL].vel=0;
 			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_POSITION;
@@ -297,7 +305,7 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
-			
+
 			commands[COMMAND_WHEEL_STEER_FL].pos=0;
 			commands[COMMAND_WHEEL_STEER_FL].vel=0;
 			commands[COMMAND_WHEEL_STEER_FL].mode=MODE_POSITION;
@@ -349,7 +357,7 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
-			
+
 			commands[COMMAND_WHEEL_STEER_FL].pos=0;
 			commands[COMMAND_WHEEL_STEER_FL].vel=0;
 			commands[COMMAND_WHEEL_STEER_FL].mode=MODE_POSITION;
@@ -397,7 +405,7 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_DRIVE_BR].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
-			
+
 			commands[COMMAND_WHEEL_WALK_FL].pos=0;
 			commands[COMMAND_WHEEL_WALK_FL].vel=0;
 			commands[COMMAND_WHEEL_WALK_FL].mode=MODE_POSITION;
@@ -420,26 +428,37 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 	}
 
 	m_DrivingMode = newDrivingMode;
-	// std::cout << "Driving mode set to: " << m_DrivingMode << std::endl;
+
+	LOG_DEBUG_S << "Driving mode set to: " << m_DrivingMode;
 	return true;
 }
 
 void LocomotionControl::pltfDriveStraightVelocity(double dVelocity)
 {
 	if (m_DrivingMode!=STRAIGHT_LINE){
-		std::cout << "Trying to drive straight without being in straight line mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to drive straight without being in straight line mode. Exiting without driving...";
 		return;
 	}
 
 	double dVelRadS = dVelocity/m_dWheelRadius;
-        commands[COMMAND_WHEEL_DRIVE_GROUP].vel=dVelRadS;
-	commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
+    commands[COMMAND_WHEEL_DRIVE_FL].vel=dVelRadS;
+    commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
+    commands[COMMAND_WHEEL_DRIVE_FR].vel=dVelRadS;
+    commands[COMMAND_WHEEL_DRIVE_FR].mode=MODE_SPEED;
+    commands[COMMAND_WHEEL_DRIVE_CL].vel=dVelRadS;
+    commands[COMMAND_WHEEL_DRIVE_CL].mode=MODE_SPEED;
+    commands[COMMAND_WHEEL_DRIVE_CR].vel=dVelRadS;
+    commands[COMMAND_WHEEL_DRIVE_CR].mode=MODE_SPEED;
+    commands[COMMAND_WHEEL_DRIVE_BL].vel=dVelRadS;
+    commands[COMMAND_WHEEL_DRIVE_BL].mode=MODE_SPEED;
+    commands[COMMAND_WHEEL_DRIVE_BR].vel=dVelRadS;
+    commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
 }
 
 void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRotationCenter, double *dPointToControl)
 {
 	if (m_DrivingMode!=ACKERMAN){
-		std::cout << "Trying to drive Ackerman without being in Ackerman mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to drive Ackerman without being in Ackerman mode. Exiting without driving...";
 		return;
 	}
 
@@ -450,7 +469,7 @@ void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRota
 		m_dWheelSteering,
 		m_dWheelVelocity ))
 	{
-		std::cout << "Error in GenericAckerman function. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Error in GenericAckerman function. Exiting without driving...";
 		return;
 	}
 
@@ -547,11 +566,51 @@ void LocomotionControl::pltfDriveGenericCrab(double dLinearVelocity, double dHea
 	}
 }
 
+void LocomotionControl::pltfDriveCrab(double dVelocity, double dHeadingAngle)
+{
+
+	if (m_DrivingMode!=CRAB){
+		LOG_WARN_S << "Trying to drive Crab without being in Crab mode. Exiting without driving...";
+		return;
+	}
+
+    if (Crab( &MyRover,
+	    dVelocity,
+	    dHeadingAngle,
+		m_dWheelSteering,
+		m_dWheelVelocity ))
+    {
+
+		LOG_WARN_S << "Error in Crab function. Exiting without driving...";
+		return;
+    }
+
+	for (int i=0; i<m_iNumWheels;i++)
+	{
+        if (m_dWheelSteering[i] > M_PI / 2.0)
+        {
+            m_dWheelSteering[i] -= M_PI;
+            m_dWheelVelocity[i] *= -1;
+        }
+        else if (m_dWheelSteering[i] < -M_PI / 2.0)
+        {
+            m_dWheelSteering[i] += M_PI;
+            m_dWheelVelocity[i] *= -1;
+        }
+
+        commands[COMMAND_WHEEL_STEER_FL+i].pos=m_dWheelSteering[i];
+        commands[COMMAND_WHEEL_STEER_FL+i].vel=0;
+        commands[COMMAND_WHEEL_STEER_FL+i].mode=MODE_POSITION;
+
+		commands[COMMAND_WHEEL_DRIVE_FL+i].vel=m_dWheelVelocity[i];
+		commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
+	}
+}
 
 void LocomotionControl::pltfDriveSpotTurn(double dAngularVelocity)
 {
 	if (m_DrivingMode!=SPOT_TURN){
-		std::cout << "Trying to drive Spot Turn without being in Spot Turn mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to drive Spot Turn without being in Spot Turn mode. Exiting without driving...";
 		return;
 	}
 
@@ -560,7 +619,7 @@ void LocomotionControl::pltfDriveSpotTurn(double dAngularVelocity)
 		m_dWheelSteering,
 		m_dWheelVelocity ))
 	{
-		std::cout << "Error in SpotTurn function. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Error in SpotTurn function. Exiting without driving...";
 		return;
 	}
 
@@ -606,7 +665,7 @@ void LocomotionControl::pltfDriveSpotTurn(double dAngularVelocity)
 void LocomotionControl::pltfDriveSkidTurn(double dVelocity, double dRadiusOfCurvature, int iIsStraightLine)
 {
 	if (m_DrivingMode!=SKID_TURN){
-		std::cout << "Trying to drive Skid Turn without being in Skid Turn mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to drive Skid Turn without being in Skid Turn mode. Exiting without driving...";
 		return;
 	}
 
@@ -617,7 +676,7 @@ void LocomotionControl::pltfDriveSkidTurn(double dVelocity, double dRadiusOfCurv
 		iIsStraightLine,
 		m_dWheelVelocity ))
 	{
-		std::cout << "Error in SkidTurn function. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Error in SkidTurn function. Exiting without driving...";
 		return;
 	}
 
@@ -631,7 +690,7 @@ void LocomotionControl::pltfDriveSkidTurn(double dVelocity, double dRadiusOfCurv
 void LocomotionControl::pltfDriveWheelWalk(double *dStepLength, int iGait)
 {
 	if (m_DrivingMode!=WHEEL_WALKING){
-		std::cout << "Trying to drive Wheel Walk without being in Wheel Walking mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to drive Wheel Walk without being in Wheel Walking mode. Exiting without driving...";
 		return;
 	}
 
@@ -642,11 +701,11 @@ void LocomotionControl::pltfDriveWheelWalk(double *dStepLength, int iGait)
 		m_dWheelAngleRad
 		))
 	{
-		std::cout << "Error in WheelWalk function. Exiting without driving..." << std::endl;
+		LOG_ERROR_S << "Error in WheelWalk function. Exiting without driving...";
 		return;
 	}
 
-	std::cout << "WheelWalk function not implemented yet in Generic Manoeuvre Library. Exiting without driving..." << std::endl;
+	LOG_WARN_S << "WheelWalk function not implemented yet in Generic Manoeuvre Library. Exiting without driving...";
 
 	/* Commented for safety until a validated code for wheel walking capabilities is implemented in the Generic Manoeuvre Library
 	for (int i=0; i<m_iNumWheels;i++)
@@ -667,7 +726,7 @@ void LocomotionControl::pltfBemaDeploy(double speed, double *currentDeployAngles
             commands[COMMAND_WHEEL_WALK_FL+i].mode=MODE_SPEED;
             //commands[COMMAND_WHEEL_DRIVE_FL+i].vel=-speed*m_dWheelLeg/m_dWheelRadius*0.60;  //* Contact point of wheel not moving
             commands[COMMAND_WHEEL_DRIVE_FL+i].vel=-speed*(1+m_dWheelLeg/m_dWheelRadius*cos(currentDeployAngles[i]));  //* Deployment joing not moving forward/backward. Just lifting.
-	    commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
+            commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
         }
 }
 
@@ -679,8 +738,7 @@ void LocomotionControl::pltfWalkingDeployFront(double speed, double *currentDepl
             commands[COMMAND_WHEEL_WALK_FL+i].mode=MODE_SPEED;
             //commands[COMMAND_WHEEL_DRIVE_FL+i].vel=-speed*m_dWheelLeg/m_dWheelRadius*0.60;
             commands[COMMAND_WHEEL_DRIVE_FL+i].vel=-speed*(1+m_dWheelLeg/m_dWheelRadius*cos(currentDeployAngles[i]));
-	    commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
-
+            commands[COMMAND_WHEEL_DRIVE_FL+i].mode=MODE_SPEED;
         }
 }
 
@@ -692,8 +750,7 @@ void LocomotionControl::pltfWalkingDeployRear(double speed, double *currentDeplo
             commands[COMMAND_WHEEL_WALK_BL+i].mode=MODE_SPEED;
             //commands[COMMAND_WHEEL_DRIVE_BL+i].vel=-speed*m_dWheelLeg/m_dWheelRadius;
             commands[COMMAND_WHEEL_DRIVE_BL+i].vel=-speed*(1+m_dWheelLeg/m_dWheelRadius*cos(currentDeployAngles[4+i]));
-	    commands[COMMAND_WHEEL_DRIVE_BL+i].mode=MODE_SPEED;
-
+            commands[COMMAND_WHEEL_DRIVE_BL+i].mode=MODE_SPEED;
         }
 }
 
@@ -701,7 +758,7 @@ void LocomotionControl::pltfWalkingDeployRear(double speed, double *currentDeplo
 void LocomotionControl::directWheelDriveVelocityDegS(int iWheel, double dVelocity)
 {
 	if (m_DrivingMode!=DIRECT_DRIVE){
-		std::cout << "Trying to Direct Drive without being in Direct Drive mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to Direct Drive without being in Direct Drive mode. Exiting without driving...";
 		return;
 	}
 	double dRadS = dVelocity*M_PI/180;
@@ -713,7 +770,7 @@ void LocomotionControl::directWheelDriveVelocityDegS(int iWheel, double dVelocit
 void LocomotionControl::directWheelSteerAngleDeg(int iWheel, double dAngle)
 {
 	if (m_DrivingMode!=DIRECT_DRIVE){
-		std::cout << "Trying to Direct Drive without being in Direct Drive mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to Direct Drive without being in Direct Drive mode. Exiting without driving...";
 		return;
 	}
 	double dRad = dAngle*M_PI/180;
@@ -726,14 +783,11 @@ void LocomotionControl::directWheelSteerAngleDeg(int iWheel, double dAngle)
 void LocomotionControl::directWheelWalkJointAngleDeg(int iJoint, double dAngle)
 {
 	if (m_DrivingMode!=DIRECT_DRIVE){
-		std::cout << "Trying to Direct Drive without being in Direct Drive mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to Direct Drive without being in Direct Drive mode. Exiting without driving...";
 		return;
 	}
 	double dRad = dAngle*M_PI/180;
 	commands[iJoint].pos=dRad;
 	commands[iJoint].vel=0;
 	commands[iJoint].mode=MODE_POSITION;
-
 }
-
-
