@@ -42,7 +42,6 @@
 #include <generic_rover_manoeuvre/GenericRoverManoeuvre.h>
 #include "LocomotionControlTypes.h"
 #include <base/samples/Joints.hpp>
-
 #include <base-logging/Logging.hpp>
 
 /**

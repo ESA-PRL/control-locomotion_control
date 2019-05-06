@@ -509,10 +509,10 @@ void LocomotionControl::pltfDriveGenericCrab(double dLinearVelocity, double dHea
 	// Preventing force value from being sent to genericrovermanoeuvre.
 	if (dLinearVelocity == 42 || dAngularVelocity == 42) return;
 
-	// for (int i=0;i<6;i++) std::cout << steeringPositionReadings[i] << std::endl;
+	// for (int i=0;i<6;i++) LOG_DEBUG_S << steeringPositionReadings[i];
 
 	if (m_DrivingMode!=GENERIC_CRAB){
-		std::cout << "Trying to drive Generic Crab without being in Generic Crab mode. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Trying to drive Generic Crab without being in Generic Crab mode. Exiting without driving...";
 		return;
 	}
 
@@ -524,7 +524,7 @@ void LocomotionControl::pltfDriveGenericCrab(double dLinearVelocity, double dHea
 		m_dWheelSteering,
 		m_dWheelVelocity ))
 	{
-		std::cout << "Error in GenericCrab function. Exiting without driving..." << std::endl;
+		LOG_WARN_S << "Error in GenericCrab function. Exiting without driving...";
 		return;
 	}
 
@@ -552,12 +552,12 @@ void LocomotionControl::pltfDriveGenericCrab(double dLinearVelocity, double dHea
 	commands[COMMAND_WHEEL_STEER_BR].vel=0;
 	commands[COMMAND_WHEEL_STEER_BR].mode=MODE_POSITION;
 
-	// std::cout << m_dWheelSteering[0] << std::endl;
-	// std::cout << m_dWheelSteering[1] << std::endl;
-	// std::cout << m_dWheelSteering[2] << std::endl;
-	// std::cout << m_dWheelSteering[3] << std::endl;
-	// std::cout << m_dWheelSteering[4] << std::endl;
-	// std::cout << m_dWheelSteering[5] << std::endl;
+	// LOG_WARN_S << m_dWheelSteering[0];
+	// LOG_WARN_S << m_dWheelSteering[1];
+	// LOG_WARN_S << m_dWheelSteering[2];
+	// LOG_WARN_S << m_dWheelSteering[3];
+	// LOG_WARN_S << m_dWheelSteering[4];
+	// LOG_WARN_S << m_dWheelSteering[5];
 
 	for (int i=0; i<m_iNumWheels;i++)
 	{
@@ -580,7 +580,6 @@ void LocomotionControl::pltfDriveCrab(double dVelocity, double dHeadingAngle)
 		m_dWheelSteering,
 		m_dWheelVelocity ))
     {
-
 		LOG_WARN_S << "Error in Crab function. Exiting without driving...";
 		return;
     }
