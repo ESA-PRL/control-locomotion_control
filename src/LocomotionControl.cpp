@@ -142,22 +142,15 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
 
 			commands[COMMAND_WHEEL_STEER_FL].pos=0;
-			commands[COMMAND_WHEEL_STEER_FL].vel=0;
 			commands[COMMAND_WHEEL_STEER_FL].mode=MODE_POSITION;
 			commands[COMMAND_WHEEL_STEER_FR].pos=0;
-			commands[COMMAND_WHEEL_STEER_FR].vel=0;
 			commands[COMMAND_WHEEL_STEER_FR].mode=MODE_POSITION;
 			commands[COMMAND_WHEEL_STEER_BL].pos=0;
-			commands[COMMAND_WHEEL_STEER_BL].vel=0;
 			commands[COMMAND_WHEEL_STEER_BL].mode=MODE_POSITION;
 			commands[COMMAND_WHEEL_STEER_BR].pos=0;
-			commands[COMMAND_WHEEL_STEER_BR].vel=0;
 			commands[COMMAND_WHEEL_STEER_BR].mode=MODE_POSITION;
 			break;
 		case STOPPED_WHEELS:
-			commands[COMMAND_WHEEL_DRIVE_GROUP].vel=0;
-			commands[COMMAND_WHEEL_DRIVE_GROUP].mode=MODE_SPEED;
-            break;
 	    case ACKERMAN:
 		case DIRECT_DRIVE:
 		case SPOT_TURN:
