@@ -506,9 +506,6 @@ void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRota
 
 void LocomotionControl::pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, double *steeringPositionReadings)
 {
-	// Preventing force value from being sent to genericrovermanoeuvre.
-	if (dLinearVelocity == 42 || dAngularVelocity == 42) return;
-
 	// for (int i=0;i<6;i++) LOG_DEBUG_S << steeringPositionReadings[i];
 
 	if (m_DrivingMode!=GENERIC_CRAB){
