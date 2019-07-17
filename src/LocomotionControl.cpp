@@ -504,7 +504,7 @@ void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRota
 	}
 }
 
-void LocomotionControl::pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, double *steeringPositionReadings)
+void LocomotionControl::pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, double *steeringPositionReadings, double steeringPositionLimit)
 {
 	// for (int i=0;i<6;i++) LOG_DEBUG_S << steeringPositionReadings[i];
 
@@ -514,6 +514,7 @@ void LocomotionControl::pltfDriveGenericCrab(double dLinearVelocity, double dHea
 	}
 
 	if(GenericCrab( &MyRover,
+		steeringPositionLimit,
 		dLinearVelocity,
 		dHeadingAngle,
 		dAngularVelocity,

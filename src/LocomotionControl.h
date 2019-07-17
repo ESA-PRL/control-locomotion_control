@@ -156,10 +156,12 @@ public:
 	 * @param dLinearVelocity is the velocity in m/s at which the rover shall be commanded
 	 * @param dHeadingAngle is the angle at which the rover shall move relative to the forward direction of the rover in RAD.
 	 * @param dAngularVelocity is the rate at which the rover shall rotate around its inertial frame. [rad/s]
+	 * @param steeringPositionReadings is the current positions of the steering joints.
+	 * @param steeringPositionLimit is the steering position limit in [rad]. Must be positive. Is applied symetrically in both + and - direction. 
 	 */
-	void pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, double *steeringPositionReadings);
+	void pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, double *steeringPositionReadings, double steeringPositionLimit);
 
-  void pltfDriveCrab(double dVelocity, double dHeadingAngle);
+    void pltfDriveCrab(double dVelocity, double dHeadingAngle);
 
 	/**
 	 * **** Generic Manoeuvre Library ****
