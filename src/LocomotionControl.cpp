@@ -392,7 +392,7 @@ bool LocomotionControl::setDrivingMode(PltfDrivingMode mode)
 			commands[COMMAND_WHEEL_DRIVE_BR].mode=MODE_SPEED;
 			break;
 
-		case GENERIC_CRAB:
+		case INVERSE_KINEMATICS_2D:
 			commands[COMMAND_WHEEL_DRIVE_FL].vel=0;
 			commands[COMMAND_WHEEL_DRIVE_FL].mode=MODE_SPEED;
 			commands[COMMAND_WHEEL_DRIVE_FR].vel=0;
@@ -504,16 +504,16 @@ void LocomotionControl::pltfDriveGenericAckerman(double dVelocity, double *dRota
 	}
 }
 
-void LocomotionControl::pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, double *steeringPositionReadings, double steeringPositionLimit)
+void LocomotionControl::pltfDriveInverseKinematics2D(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, double *steeringPositionReadings, double steeringPositionLimit)
 {
 	// for (int i=0;i<6;i++) LOG_DEBUG_S << steeringPositionReadings[i];
 
-	if (m_DrivingMode!=GENERIC_CRAB){
-		LOG_WARN_S << "Trying to drive Generic Crab without being in Generic Crab mode. Exiting without driving...";
+	if (m_DrivingMode!=INVERSE_KINEMATICS_2D){
+		LOG_WARN_S << "Trying to drive InverseKinematics2D without being in InverseKinematics2D mode. Exiting without driving...";
 		return;
 	}
 
-	if(GenericCrab( &MyRover,
+	if(InverseKinematics2D( &MyRover,
 		steeringPositionLimit,
 		dLinearVelocity,
 		dHeadingAngle,
@@ -522,7 +522,7 @@ void LocomotionControl::pltfDriveGenericCrab(double dLinearVelocity, double dHea
 		m_dWheelSteering,
 		m_dWheelVelocity ))
 	{
-		LOG_WARN_S << "Error in GenericCrab function. Exiting without driving...";
+		LOG_WARN_S << "Error in InverseKinematics2D function. Exiting without driving...";
 		return;
 	}
 

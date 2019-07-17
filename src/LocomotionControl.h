@@ -57,7 +57,7 @@ enum PltfDrivingMode
  	CRAB,
 	WHEEL_WALKING,
 	DIRECT_DRIVE,
-	GENERIC_CRAB
+	INVERSE_KINEMATICS_2D
 };
 
 /**
@@ -152,14 +152,14 @@ public:
 
 	/**
 	 * **** Generic Manoeuvre Library ****
-	 * Drives the rover platform to perform a Generic Crab manoeuvre. This is only works if all wheels are steerable.
+	 * Drives the rover platform to perform a generic manoeuvre by applying the rovers 2D inverse kinematics. This is only works if all wheels are steerable.
 	 * @param dLinearVelocity is the velocity in m/s at which the rover shall be commanded
 	 * @param dHeadingAngle is the angle at which the rover shall move relative to the forward direction of the rover in RAD.
 	 * @param dAngularVelocity is the rate at which the rover shall rotate around its inertial frame. [rad/s]
 	 * @param steeringPositionReadings is the current positions of the steering joints.
 	 * @param steeringPositionLimit is the steering position limit in [rad]. Must be positive. Is applied symetrically in both + and - direction. 
 	 */
-	void pltfDriveGenericCrab(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, double *steeringPositionReadings, double steeringPositionLimit);
+	void pltfDriveInverseKinematics2D(double dLinearVelocity, double dHeadingAngle, double dAngularVelocity, double *steeringPositionReadings, double steeringPositionLimit);
 
     void pltfDriveCrab(double dVelocity, double dHeadingAngle);
 
